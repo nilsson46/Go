@@ -1,0 +1,16 @@
+
+
+GET http://localhost:8085/api/employees
+
+
+### Get all employees
+
+POST http://localhost:8085/api/employees
+Content-Type: application/json
+
+{
+"Id" : 4,
+  "name": "John",
+  "Age": 30,
+  "salary": 1000
+}
