@@ -8,6 +8,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func handleStartPage(c *gin.Context) {
+	c.String(http.StatusOK, "text/html; charset=utf-8", []byte("<h1>Start page</h1>"))
+}
+
+type PageView struct {
+	Title  string
+	Rubrik string
+}
+
+func handleAboutPage(c *gin.Context) {
+	c.HTML(http.StatusOK, "about.html", &PageView{Title: "Title about html", Rubrik: "About page"})
+}
 func handleGetAllEmployees(c *gin.Context) {
 	emps := data.GetAllEmployees()
 	c.IndentedJSON(http.StatusOK, emps)
@@ -41,6 +53,11 @@ func main() {
 	data.Init()
 
 	r := gin.Default()
+
+	r.LoadHTMLGlob("templates/**")
+	r.GET("/", handleStartPage)
+
+	r.GET("/about", handleAboutPage)
 
 	r.GET("/api/employees", handleGetAllEmployees)
 	r.GET("/api/employees/:id", handleGetOneEmployee)
