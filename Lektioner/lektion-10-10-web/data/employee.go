@@ -2,7 +2,7 @@ package data
 
 type Employee struct {
 	Id   int
-	Name string
+	Name string `json:"name"`
 	Age  int
 	City string
 }

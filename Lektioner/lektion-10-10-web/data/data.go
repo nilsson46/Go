@@ -5,7 +5,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var employees []Employee
+//var employees []Employee
 
 func GetAllEmployees() []Employee {
 	var employees []Employee
@@ -18,6 +18,22 @@ func CreateNewEmployee(newEmployee Employee) {
 	//employees = append(employees, employee)
 }
 
+func UpdateEmployee(employee Employee) {
+	db.Save(&employee)
+}
+
+func GetEmployeeById(id int) *Employee {
+	var employee Employee
+	db.First(&employee, id)
+	return &employee
+}
+
+func DeleteEmployee(employee Employee) {
+	db.Delete(&employee)
+}
+
+/*for i, emp := range
+
 func GetEmployeeById(id int) *Employee {
 	var employee Employee
 	db.First(&employee, id)
@@ -28,7 +44,6 @@ func GetEmployeeById(id int) *Employee {
 		}
 	}
 	return nil*/
-}
 
 var db *gorm.DB
 

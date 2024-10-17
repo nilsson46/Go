@@ -49,7 +49,40 @@ func handleCreateEmployee(c *gin.Context) {
 	c.JSON(http.StatusCreated, employee)
 }
 
+func handleUpdateEmployee(c *gin.Context) {
+	id := c.Param("id")
+	numId, _ := strconv.Atoi(id)
+	employeeFromDB := data.GetEmployeeById(numId)
+	if employeeFromDB == nil {
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Employee not found"})
+		return
+	} else {
+		var employeeJson data.Employee
+		if err := c.BindJSON(&employeeJson); err != nil {
+			return
+		}
+
+		employeeJson.Id = numId
+		data.UpdateEmployee(employeeJson)
+		c.IndentedJSON(http.StatusOK, employeeJson)
+	}
+}
+
+func handleDeleteEmployee(c *gin.Context) {
+	id := c.Param("id")
+	numId, _ := strconv.Atoi(id)
+	employeeFromDB := data.GetEmployeeById(numId)
+	if employeeFromDB == nil {
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "Employee not found"})
+		return
+	} else {
+		data.DeleteEmployee(*employeeFromDB)
+		c.IndentedJSON(http.StatusOK, gin.H{"message": "Employee deleted"})
+	}
+}
+
 func main() {
+
 	data.Init()
 
 	r := gin.Default()
@@ -61,6 +94,10 @@ func main() {
 
 	r.GET("/api/employees", handleGetAllEmployees)
 	r.GET("/api/employees/:id", handleGetOneEmployee)
+
+	r.PUT("/api/employees/:id", handleUpdateEmployee)
+	// Put = replace
+	//Patch == update a few fields
 	r.POST("/api/employees", handleCreateEmployee)
 	/*r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
@@ -68,5 +105,7 @@ func main() {
 			"status":  "http.StatusOK",
 		})
 	}) */
+
+	r.DELETE("/api/employees/:id", handleDeleteEmployee)
 	r.Run(":8085")
 }

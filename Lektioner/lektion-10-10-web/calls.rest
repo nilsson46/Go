@@ -14,3 +14,20 @@ Content-Type: application/json
   "Age": 30,
   "salary": 1000
 }
+
+### Delete employee
+
+DELETE http://localhost:8085/api/employees/4
+
+### Put employee
+
+PUT http://localhost:8085/api/employees/1
+Content-Type: application/json
+
+{
+"Id" : 1,
+  "name": "David",
+  "Age": 31,
+  "City": "Stockholm",
+  "salary": 1001
+}
