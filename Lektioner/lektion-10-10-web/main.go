@@ -81,9 +81,16 @@ func handleDeleteEmployee(c *gin.Context) {
 	}
 }
 
-func main() {
+var config Config
 
-	data.Init()
+func main() {
+	readConfig(&config)
+	data.Init(config.Database.File,
+		config.Database.Server,
+		config.Database.Database,
+		config.Database.Username,
+		config.Database.Password,
+		config.Database.Port)
 
 	r := gin.Default()
 

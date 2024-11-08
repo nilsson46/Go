@@ -1,0 +1,8 @@
+
+database: 
+  file: "gorm2.db"
+  sql-user: ""            #
+  sql-pass: ""
+  sql-server: "127.0.0.1"
+  sql-database: "SupportSystem"
+  sql-port: 3306

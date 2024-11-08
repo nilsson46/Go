@@ -47,9 +47,9 @@ func GetEmployeeById(id int) *Employee {
 
 var db *gorm.DB
 
-func Init() {
+func Init(file, server, database, username, password string, port int) {
 
-	db, _ = gorm.Open(sqlite.Open("./gorm.db"), &gorm.Config{})
+	db, _ = gorm.Open(sqlite.Open(file), &gorm.Config{})
 
 	db.AutoMigrate(&Employee{})
 
